@@ -1,0 +1,33 @@
+#story-id-div {
+  display: initial;
+  z-index: 10;
+  position: absolute;
+}
+
+#story-id-div.invisible {
+  display: none;
+}
+
+#surface-glass {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 5;
+}
+
+#sketch-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
