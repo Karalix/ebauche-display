@@ -19,7 +19,8 @@ function syncError (err) {
 }
 
 async function dbsync () {
-  let remoteCouch = await (await fetch('/couchdbURL')).text()
+  //let remoteCouch = await (await fetch('/couchdbURL')).text()
+  let remoteCouch = 'https://pareadedgeratillookofted:4b7d6d39311f1e821dc147547713f759e37b9b8c@fb0eb9b0-18ca-4ff4-9f10-fa884cac1f61-bluemix.cloudant.com/ebauche'
   let opts = {live: true, retry: true}
   db.replicate.to(remoteCouch, opts, syncError)
   db.replicate.from(remoteCouch, opts, syncError)
