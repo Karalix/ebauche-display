@@ -2,7 +2,7 @@ var db = new PouchDB('display');
 //var remoteCouch = 'http://admin:admin@localhost:5984/ebauche'
 
 
-window.webstrateUrl = 'https://webstrates.cs.au.dk'
+window.webstrateUrl = 'https://demo.webstrates.net'
 var display
 var storyId = ''
 var storyDisplayListener
