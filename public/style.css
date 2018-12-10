@@ -8,6 +8,31 @@
   display: none;
 }
 
+#delete-sketch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 7;
+  background-color: grey;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  cursor: pointer;
+  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+  margin-top: -12px;
+  margin-right: -12px;
+}
+
+#delete-sketch img {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 50%;
+  top: 50%; 
+  margin-left: -12px;
+  margin-top: -12px;
+}
+
 #surface-glass {
   position: absolute;
   top: 0;

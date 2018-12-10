@@ -7,6 +7,7 @@ var display
 var storyId = ''
 var storyDisplayListener
 var current = 0
+var currentSketch = ''
 
 window.addEventListener('message', (event) => {
   if(event.data === 'canvas-loaded') {
@@ -26,6 +27,27 @@ async function dbsync () {
   db.replicate.from(remoteCouch, opts, syncError)
 }
 
+// function updateSvg () {
+//   let headers = new Headers()
+//   let init = {
+//     method: 'GET',
+//     headers: headers,
+//     mode: 'cors',
+//     cache: 'no-cache'
+//   }
+
+//   fetch(`${window.webstrateUrl}/${currentSketch}/?raw`, init)
+//     .then((response) => {
+//       return response.text()
+//     })
+//     .then((text) => {
+//       svgString = text.match(/.*(<svg.+<\/svg>).*/)
+//       let template = document.createElement('template')
+//       template.innerHTML = svgString
+//       document.querySelector('#iframe-mirror').appendChild(template.content.firstChild)
+//     })
+// }
+
 function startStoryDisplayListener () {
   storyDisplayListener = db.changes({
     since: 'now',
@@ -34,9 +56,15 @@ function startStoryDisplayListener () {
     include_docs: true
   }).on('change', (change) => {
     current = change.doc.current
+    currentSketch = change.doc.sketches[change.doc.current]
+    // updateSvg()
     document.querySelector('#sketch-iframe').src = `${window.webstrateUrl}/${change.doc.sketches[change.doc.current]}`
   })
 }
+
+// setInterval(() => {
+//   updateSvg()
+// }, 2000)
 
 window.onkeydown = (e) => {
   let key = e.keyCode ? e.keyCode : e.which
@@ -65,6 +93,20 @@ document.querySelector('#surface-glass').addEventListener('click', (e) => {
         newIndex = 0
       }
       doc.current = newIndex
+      db.put(doc, (err, resp) => { if(err){console.error(err)}})
+    }
+  })
+})
+
+document.querySelector('#delete-sketch').addEventListener('click', (e) => {
+  db.get(`${storyId}`, (err, doc) => {
+    if(!err) {
+      if(doc.sketches.length >= 1) {
+        doc.sketches.splice(doc.current, 1)
+      }
+      if(doc.current > 0) {
+        doc.current = doc.current - 1
+      }
       db.put(doc, (err, resp) => { if(err){console.error(err)}})
     }
   })
